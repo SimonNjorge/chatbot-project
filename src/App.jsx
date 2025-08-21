@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { ChatInput } from './components/ChatInput';
 import ChatMessages  from './components/ChatMessages';
+import dayjs from 'dayjs';
 
 import './App.css';
 import { Chatbot } from 'supersimpledev';
+
+let today = dayjs()
+console.log(today.format('ddd MMM '))
 
 function App () {
   //const array = React.useState("chatmessages object")
@@ -15,7 +19,9 @@ function App () {
 
     }, []);
   });
+
   const [chatMessages, setChatMessages] = useState(
+    JSON.parse(localStorage.getItem('messages')) ||
         [{
           message: "hello chatbot",
           sender: "user",
@@ -36,8 +42,8 @@ function App () {
   );
 
   useEffect(() => {
-    
-  })
+    localStorage.setItem('messages', JSON.stringify(chatMessages))
+  }, [chatMessages])
   //const [chatMessages, setChatMessages] = array
   //const chatMessages = array[0];
   //const setChatMessages = array[1];

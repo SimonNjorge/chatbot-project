@@ -3,7 +3,7 @@ import { ChatMessage } from './ChatMessage';
 import './ChatMessages.css';
 
 function ChatMessages ({chatMessages}) {
-    //this value startts as null because the element
+    //this value starts as null because the element
     //that we want to assign is not yet created
     const chatMessagesRef = useRef(null);
     useEffect(() => {
