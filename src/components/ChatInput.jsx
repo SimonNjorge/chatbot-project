@@ -1,5 +1,6 @@
-import { Chatbot} from 'supersimpledev';
 import { useState } from 'react';
+import { Chatbot} from 'supersimpledev';
+import dayjs from 'dayjs';
 
 import './ChatInput.css';
 
@@ -11,25 +12,32 @@ export function ChatInput ({chatMessages, setChatMessages}) {
   }
 
   async function sendMessage () {
-      const newChatMessages = [...chatMessages, {
-          message: inputText,
-          sender: "user",
-          id: crypto.randomUUID()
-      }];
-      setChatMessages([...newChatMessages, {
+
+    const today = dayjs();
+    const time = today.format('ddd  D HH:mm A');
+
+    const newChatMessages = [...chatMessages, {
+        message: inputText,
+        sender: "user",
+        time: time,
+        id: crypto.randomUUID()
+    }];
+
+    setChatMessages([...newChatMessages, {
         message: 'loading...',
         sender: 'robot',
         id: crypto.randomUUID()
-      }]);
+    }]);
 
-      setInputText('');
+    setInputText('');
 
-      const response = await Chatbot.getResponseAsync(inputText);
-      setChatMessages([...newChatMessages, {
-          message: response,
-          sender: "robot",
-          id: crypto.randomUUID()
-      }]);
+    const response = await Chatbot.getResponseAsync(inputText);
+    setChatMessages([...newChatMessages, {
+        message: response,
+        sender: "robot",
+        time: time,
+        id: crypto.randomUUID()
+    }]);
 
       //setInputText('');
   }
@@ -51,6 +59,9 @@ export function ChatInput ({chatMessages, setChatMessages}) {
               onClick={sendMessage}
               className="send-msg-btn"
           >Send</button>
+          <button onClick={() => setChatMessages([])} className='clear-btn'>
+            clear
+          </button>
       </div>
   )
 }
