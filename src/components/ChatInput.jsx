@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Chatbot} from 'supersimpledev';
+import { Chatbot } from 'supersimpledev';
 import dayjs from 'dayjs';
 
 import './ChatInput.css';
